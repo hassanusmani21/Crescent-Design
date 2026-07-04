@@ -23,9 +23,6 @@ type OpenSource = "manual" | "automatic";
 
 type ConsultationOpenEvent = CustomEvent<{ source?: OpenSource }>;
 
-const INQUIRY_MODAL_DELAY = 10_000;
-const SESSION_DISMISSED_KEY = "crescent-inquiry-dismissed";
-const SESSION_OPENED_KEY = "crescent-inquiry-opened";
 const SUBMITTED_KEY = "crescent-inquiry-submitted";
 
 const fieldOrder: FormField[] = [
@@ -122,14 +119,6 @@ function getFocusableElements(container: HTMLElement | null) {
   ).filter((element) => !element.hasAttribute("hidden"));
 }
 
-function readBrowserStorage(storage: Storage, key: string) {
-  try {
-    return storage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
 function writeBrowserStorage(storage: Storage, key: string, value: string) {
   try {
     storage.setItem(key, value);
@@ -174,17 +163,12 @@ export function ConsultationModal() {
   const panelRef = useRef<HTMLElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
   const previousOpenRef = useRef(false);
-  const autoOpenCleanupRef = useRef<() => void>(() => {});
   const scrollRestoreRef = useRef<(() => void) | null>(null);
   const isInquiryRoute = isConsultationRoute(pathname);
 
   const closeModal = useCallback(() => {
     if (status === "submitting") {
       return;
-    }
-
-    if (typeof window !== "undefined") {
-      writeBrowserStorage(window.sessionStorage, SESSION_DISMISSED_KEY, "true");
     }
 
     setOpen(false);
@@ -196,8 +180,6 @@ export function ConsultationModal() {
         return;
       }
 
-      autoOpenCleanupRef.current();
-
       if (source === "manual" && isInquiryRoute) {
         const inlineForm = document.getElementById("consultation-inline-form");
         if (inlineForm instanceof HTMLElement) {
@@ -208,7 +190,6 @@ export function ConsultationModal() {
       }
 
       returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      writeBrowserStorage(window.sessionStorage, SESSION_OPENED_KEY, "true");
 
       if (status === "success") {
         setForm(initialForm);
@@ -232,86 +213,6 @@ export function ConsultationModal() {
 
     return () => window.removeEventListener("crescent:open-consultation", handleOpen as EventListener);
   }, [openModal]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    if (
-      open ||
-      isInquiryRoute ||
-      readBrowserStorage(window.sessionStorage, SESSION_OPENED_KEY) ||
-      readBrowserStorage(window.sessionStorage, SESSION_DISMISSED_KEY) ||
-      readBrowserStorage(window.localStorage, SUBMITTED_KEY)
-    ) {
-      return;
-    }
-
-    let remainingTime = INQUIRY_MODAL_DELAY;
-    let startedAt = 0;
-    let timeoutId: number | null = null;
-    let disposed = false;
-
-    const clearTimer = () => {
-      if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-    };
-
-    const cleanup = () => {
-      disposed = true;
-      clearTimer();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-
-      if (autoOpenCleanupRef.current === cleanup) {
-        autoOpenCleanupRef.current = () => {};
-      }
-    };
-
-    const startTimer = () => {
-      clearTimer();
-      startedAt = Date.now();
-      timeoutId = window.setTimeout(attemptOpen, remainingTime);
-    };
-
-    const attemptOpen = () => {
-      if (disposed) {
-        return;
-      }
-
-      if (document.visibilityState !== "visible") {
-        return;
-      }
-
-      if (document.body.style.overflow === "hidden") {
-        remainingTime = 1_000;
-        startTimer();
-        return;
-      }
-
-      openModal("automatic");
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        clearTimer();
-        remainingTime = Math.max(0, remainingTime - (Date.now() - startedAt));
-        return;
-      }
-
-      if (remainingTime > 0) {
-        startTimer();
-      }
-    };
-
-    autoOpenCleanupRef.current = cleanup;
-    startTimer();
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return cleanup;
-  }, [isInquiryRoute, open, openModal]);
 
   useEffect(() => {
     if (!open) {

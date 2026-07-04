@@ -29,7 +29,7 @@ export function TestimonialSlider() {
         <span aria-hidden="true" className="absolute left-0 top-6 font-display text-[4rem] leading-none text-[var(--accent-soft)]">
           &ldquo;
         </span>
-        <blockquote className="max-w-[52rem] pl-10 font-display text-[clamp(2rem,3.3vw,4.8rem)] leading-[0.98] tracking-[-0.03em] text-[var(--text-primary)]">
+        <blockquote className="max-w-[52rem] pl-10 font-display text-[clamp(2rem,3.3vw,4.8rem)] leading-[1] text-[var(--text-primary)]">
           {testimonial.quote}
         </blockquote>
       </div>

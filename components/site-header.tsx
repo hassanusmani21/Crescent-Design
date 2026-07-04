@@ -6,11 +6,9 @@ import { ConsultationButton } from "@/components/consultation-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
-  { label: "Projects", href: "#projects", id: "projects" },
+  { label: "Portfolio", href: "#portfolio", id: "portfolio" },
   { label: "Services", href: "#services", id: "services" },
-  { label: "About", href: "#about", id: "about" },
-  { label: "Journal", href: "#journal", id: "journal" },
-  { label: "Contact", href: "#contact", id: "contact" },
+  { label: "Process", href: "#process", id: "process" },
 ];
 
 function getFocusableElements(container: HTMLElement | null) {
@@ -28,7 +26,7 @@ function getFocusableElements(container: HTMLElement | null) {
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("projects");
+  const [activeSection, setActiveSection] = useState("portfolio");
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const previousMenuOpen = useRef(false);
@@ -140,7 +138,7 @@ export function SiteHeader() {
             : "site-header--overlay border-transparent bg-transparent",
         ].join(" ")}
       >
-        <div className="mx-auto flex h-[5.5rem] w-full max-w-[1520px] items-center gap-4 px-[var(--page-padding)]">
+        <div className="mx-auto flex h-[5rem] w-full max-w-[1520px] items-center gap-4 px-[var(--page-padding)]">
           <Link
             href="#top"
             className={`site-header__brand min-w-0 text-[0.95rem] font-semibold uppercase tracking-[0.22em] focus-visible:outline-none ${isOverlay ? "text-[var(--hero-foreground)]" : "text-[var(--text-primary)]"}`}
@@ -169,7 +167,7 @@ export function SiteHeader() {
           <div className="ml-auto hidden items-center gap-3 lg:flex">
             <ThemeToggle className="header-theme-toggle" />
             <ConsultationButton
-              className={`header-cta min-h-11 px-5 text-sm ${isOverlay ? "button-secondary text-[var(--hero-foreground)] shadow-none" : "button-primary"}`}
+              className={`header-cta magnetic-target min-h-11 px-5 text-base ${isOverlay ? "button-secondary text-[var(--hero-foreground)] shadow-none" : "button-primary"}`}
             >
               Start a Project
             </ConsultationButton>
@@ -233,10 +231,10 @@ export function SiteHeader() {
             </nav>
 
             <div className="space-y-8 border-t border-[var(--border-subtle)] pt-8">
-              <div className="flex items-center justify-between gap-4 rounded-[18px] border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-4 py-3">
+              <div className="flex items-center justify-between gap-4 border border-[var(--border-subtle)] px-4 py-3">
                 <div>
                   <p className="section-label">Theme</p>
-                  <p className="mt-1 text-sm text-[var(--text-secondary)]">Choose the studio view you prefer.</p>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)]">Choose light or dark.</p>
                 </div>
                 <ThemeToggle />
               </div>
@@ -245,22 +243,9 @@ export function SiteHeader() {
                 Start a Project
               </ConsultationButton>
 
-              <div className="grid gap-6 text-sm text-[var(--text-secondary)] sm:grid-cols-2">
-                <div>
-                  <p className="section-label">Contact</p>
-                  <p className="mt-3 max-w-xs leading-7">
-                    Share the rooms, timeline, and mood you want the project to hold. We will shape the next step with you.
-                  </p>
-                </div>
-                <div>
-                  <p className="section-label">Studio</p>
-                  <ul className="mt-3 grid gap-2 leading-7">
-                    <li>Residential interiors</li>
-                    <li>Commercial spaces</li>
-                    <li>Kitchen and bath planning</li>
-                  </ul>
-                </div>
-              </div>
+              <p className="max-w-xs text-sm leading-7 text-[var(--text-secondary)]">
+                Navigate the portfolio, services, and process before starting a project.
+              </p>
             </div>
           </div>
         </div>

@@ -3,6 +3,42 @@ import Link from "next/link";
 import { ConsultationButton } from "@/components/consultation-button";
 import { LinkArrow } from "@/components/link-arrow";
 
+const heroStats = [
+  {
+    value: "40+",
+    label: "Projects Completed",
+    icon: (
+      <path
+        d="M12 3.5 4.75 7.6v8.8L12 20.5l7.25-4.1V7.6L12 3.5Zm0 0v8.4m0 8.6v-8.6m0 0 7.25-4.3M12 11.9 4.75 7.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+  {
+    value: "10+",
+    label: "Years of Experience",
+    icon: (
+      <path
+        d="M7 10.5h10m-8.5 0V7.25A2.25 2.25 0 0 1 10.75 5h2.5a2.25 2.25 0 0 1 2.25 2.25v3.25M6.25 10.5h11.5l-.7 7.5H6.95l-.7-7.5Zm2 7.5v2m7.5-2v2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+  {
+    value: "100%",
+    label: "Client Satisfaction",
+    icon: (
+      <path
+        d="m12 3.75 2.05 2.12 2.95-.18.18 2.95 2.12 2.05-2.12 2.05-.18 2.95-2.95-.18L12 17.63 9.95 15.5l-2.95.18-.18-2.95-2.12-2.05 2.12-2.05.18-2.95 2.95.18L12 3.75Zm-1.6 7.02 1.08 1.08 2.22-2.38"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+];
+
 export function HeroSection() {
   return (
     <section
@@ -17,7 +53,7 @@ export function HeroSection() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[62%_center]"
+          className="hero-image object-cover object-[62%_center]"
         />
       </div>
 
@@ -29,68 +65,55 @@ export function HeroSection() {
               id="hero-title"
               className="hero-sequence-2 hero-title text-[var(--hero-foreground)]"
             >
-              Spaces designed around the way you live.
+              Quiet interiors <br />
+              for considered <br />
+              <span>living.</span>
             </h1>
             <p className="hero-sequence-3 hero-description text-[var(--hero-soft)]">
-              Crescent Design creates thoughtful, enduring interiors shaped by people, place, and material. We translate full-home plans, kitchen architecture, bedrooms, baths, and commercial rooms into calm, lived-in spaces.
+              Crescent Design creates restrained homes, kitchens, baths, bedrooms, and commercial rooms shaped by light, material, and daily rhythm.
             </p>
             <div className="hero-sequence-4 hero-actions">
-              <Link href="#projects" className="button-primary hero-primary-button min-w-[12.75rem]">
-                <LinkArrow>Explore Projects</LinkArrow>
+              <Link href="#portfolio" className="button-primary hero-primary-button magnetic-target min-w-[12.75rem]">
+                <LinkArrow>View Work</LinkArrow>
               </Link>
-              <ConsultationButton className="button-secondary hero-secondary-button min-w-[11.75rem]">
+              <ConsultationButton className="button-secondary hero-secondary-button magnetic-target min-w-[11.75rem]">
                 <LinkArrow>Start a Project</LinkArrow>
               </ConsultationButton>
             </div>
-          </div>
-
-          <aside className="hero-project-card hero-sequence-5">
-            <p className="section-label text-[var(--hero-muted)]">Current focus</p>
-            <div className="mt-5 grid gap-5 text-sm text-[var(--hero-soft)]">
-              <div className="border-b border-white/12 pb-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-[var(--hero-muted)]">Project</p>
-                <p className="mt-2 font-display text-[clamp(1.9rem,2.6vw,2.4rem)] leading-[0.96] text-[var(--hero-foreground)]">
-                  Marble City Residence
-                </p>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-                <div className="min-w-0">
-                  <p className="text-xs uppercase tracking-[0.22em] text-[var(--hero-muted)]">Scope</p>
-                  <p className="mt-2 max-w-[17rem] leading-7 text-[var(--hero-soft)]">
-                    Living, dining, lighting, and material direction for a city-facing home.
-                  </p>
+            <div className="hero-stats" aria-label="Studio highlights">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="hero-stat">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    {stat.icon}
+                  </svg>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
                 </div>
-                <div className="sm:text-right">
-                  <p className="text-xs uppercase tracking-[0.22em] text-[var(--hero-muted)]">Year</p>
-                  <p className="mt-2 text-sm font-semibold tracking-[0.08em] text-[var(--hero-foreground)]">2024</p>
-                </div>
-              </div>
+              ))}
             </div>
-          </aside>
+          </div>
         </div>
 
-        <div className="hero-footer hero-bottom-area">
-          <div className="hero-sequence-5 hero-metadata text-sm text-[var(--hero-soft)]">
-            <div>
-              <p className="section-label hero-metadata-label">Location</p>
-              <p className="hero-metadata-value mt-2">City-view apartment</p>
-            </div>
-            <div>
-              <p className="section-label hero-metadata-label">Approach</p>
-              <p className="hero-metadata-value mt-2">Measured luxury, natural materials, quiet lighting.</p>
-            </div>
+        <aside className="hero-feature-card" aria-label="Featured project">
+          <div>
+            <p>Featured Project</p>
+            <h2>Serene Residence</h2>
+            <span>Mumbai, India · 4,250 sq.ft</span>
           </div>
-
-          <Link
-            href="#projects"
-            className="hero-sequence-5 hero-scroll-indicator interactive-link inline-flex min-h-11 items-center justify-start gap-3 text-[var(--hero-foreground)]"
-          >
-            <span className="hero-scroll-label text-xs uppercase tracking-[0.18em]">Scroll to selected work</span>
-            <span aria-hidden="true" className="link-arrow arrow text-base">
-              {"->"}
-            </span>
+          <div className="hero-feature-card__image">
+            <Image
+              src="/interiors/living-room-marble-lounge.jpg"
+              alt="Serene residence living and dining interior preview."
+              fill
+              sizes="120px"
+              className="object-cover"
+            />
+          </div>
+          <Link href="#portfolio" aria-label="View featured project" className="hero-feature-card__arrow">
+            {"->"}
           </Link>
-        </div>
+        </aside>
+
       </div>
     </section>
   );

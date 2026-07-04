@@ -120,64 +120,44 @@ export const featuredProjects: Project[] = [
 
 export const services: Service[] = [
   {
-    id: "residential",
+    id: "interior-design",
     number: "01",
-    title: "Residential Interiors",
+    title: "Interior Design",
     description:
-      "Complete home design for living rooms, bedrooms, kitchens, baths, and the connective spaces that make a home feel coherent.",
-    deliverables: ["Spatial planning", "Furniture direction", "Lighting and finish palettes"],
+      "Complete design direction for homes and selected commercial rooms, resolving layout, material, lighting, and spatial atmosphere.",
+    deliverables: ["Space planning", "Material palettes", "Lighting direction"],
     image: "/interiors/living-room-city-marble.jpg",
     alt: "Refined residential living room with marble and city views.",
   },
   {
-    id: "commercial",
+    id: "styling-furnishing",
     number: "02",
-    title: "Commercial Interiors",
+    title: "Styling & Furnishing",
     description:
-      "Hospitality and workplace environments planned for comfort, flow, maintenance, and a clear brand atmosphere.",
-    deliverables: ["Customer journey layouts", "Material coordination", "Durable detailing"],
-    image: "/interiors/commercial-blue-banquette.jpg",
-    alt: "Commercial banquette interior with blue upholstery and warm lighting.",
-  },
-  {
-    id: "styling",
-    number: "03",
-    title: "Interior Styling",
-    description:
-      "Furniture, soft furnishings, art, and accessories assembled into a room that feels finished rather than filled.",
-    deliverables: ["Furniture editing", "Textiles and art", "Final styling direction"],
+      "Furniture, textiles, art, and accessories edited into a finished room that feels layered, calm, and intentional.",
+    deliverables: ["Furniture curation", "Textile direction", "Final styling"],
     image: "/interiors/bedroom-blue-headboard.jpg",
     alt: "Bedroom with tailored textiles, blue upholstered headboard, and warm bedside lighting.",
   },
   {
-    id: "renovation",
-    number: "04",
-    title: "Renovation",
+    id: "renovation-execution",
+    number: "03",
+    title: "Renovation & Execution",
     description:
-      "Measured upgrades that improve layout, storage, surface performance, and the everyday experience of existing spaces.",
-    deliverables: ["Existing condition review", "Layout revisions", "Execution detailing"],
+      "Measured upgrades, vendor coordination, and site decisions that keep the design intent clear through installation.",
+    deliverables: ["Layout revisions", "Execution detailing", "Vendor coordination"],
     image: "/interiors/kitchen-aqua-modern.jpg",
     alt: "Renovated kitchen with modern cabinetry, lighting, and a clean palette.",
   },
   {
     id: "consultation",
-    number: "05",
-    title: "Design Consultation",
+    number: "04",
+    title: "Consultation",
     description:
-      "Focused guidance for clients who need a clear brief, sharper priorities, or a second set of eyes before committing to a wider scope.",
-    deliverables: ["Design review", "Material advice", "Scope prioritization"],
+      "Focused guidance for clients who need a clear brief, sharper priorities, or a second set of eyes before a wider scope.",
+    deliverables: ["Design review", "Material advice", "Scope clarity"],
     image: "/interiors/bathroom-gold-vanity.jpg",
     alt: "Bathroom vanity with soft stone surfaces and warm metallic accents.",
-  },
-  {
-    id: "turnkey",
-    number: "06",
-    title: "Turnkey Execution",
-    description:
-      "Coordination across vendors, materials, and site delivery so design decisions hold their quality through installation.",
-    deliverables: ["Vendor coordination", "Procurement support", "Installation oversight"],
-    image: "/interiors/kitchen-monochrome-suite.jpg",
-    alt: "Long kitchen suite with integrated cabinetry and architectural lighting.",
   },
 ];
 
