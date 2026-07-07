@@ -89,6 +89,7 @@ export function FeaturedProjects() {
             <Link href="#services">Services</Link>
             <Link href="#process">Process</Link>
           </nav>
+          <p className="minimal-footer__credit">Designed by Hassan Usmani</p>
           <p>© 2026</p>
         </div>
       </footer>

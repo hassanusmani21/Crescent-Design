@@ -2017,6 +2017,16 @@ figure:hover .project-image {
   gap: 0.9rem 1.2rem;
 }
 
+.minimal-footer__credit {
+  margin: 0;
+  color: color-mix(in srgb, var(--text-secondary) 72%, transparent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
 .minimal-footer a:hover,
 .minimal-footer a:focus-visible {
   color: var(--text-primary);
