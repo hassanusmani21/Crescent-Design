@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CursorSpotlight } from "@/components/cursor-spotlight";
 import { ThemeScript } from "@/components/theme-script";
 import "./globals.css";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body>
+        <CursorSpotlight />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>

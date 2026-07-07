@@ -59,74 +59,24 @@ export function CinematicMain({ children, className, id }: CinematicMainProps) {
     const cleanups: Array<() => void> = [];
     const context = gsap.context(() => {
       const hero = scope.querySelector<HTMLElement>(".hero");
+      const heroBackground = scope.querySelector<HTMLElement>(".hero-background");
       const heroImage = scope.querySelector<HTMLElement>(".hero-image");
       const heroContent = scope.querySelector<HTMLElement>(".hero-content");
       const canUseHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-      const heroTimeline = gsap.timeline({ defaults: { ease: premiumEase } });
 
       if (hero && heroContent && heroImage) {
-        const heroEyebrow = hero.querySelector(".hero-eyebrow");
-        const heroTitle = hero.querySelector(".hero-title");
-        const heroDescription = hero.querySelector(".hero-description");
-        const heroActions = hero.querySelectorAll(".hero-actions > *");
-        const heroStats = hero.querySelector(".hero-stats");
-        const heroFeature = hero.querySelector(".hero-feature-card");
-
-        heroTimeline
-          .fromTo(heroEyebrow, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 1, delay: 0.2 })
-          .fromTo(
-            heroTitle,
-            { autoAlpha: 0, y: 26, clipPath: "inset(0% 0% 18% 0%)" },
-            { autoAlpha: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 1.15 },
-            "-=0.52",
-          )
-          .fromTo(
-            heroDescription,
-            { autoAlpha: 0, y: 20, filter: "blur(10px)" },
-            { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1 },
-            "-=0.38",
-          )
-          .fromTo(
-            heroActions,
-            { autoAlpha: 0, y: 14, scale: 0.97 },
-            { autoAlpha: 1, y: 0, scale: 1, duration: 0.72, stagger: 0.11 },
-            "-=0.44",
-          )
-          .fromTo(
-            heroStats,
-            { autoAlpha: 0, y: 16 },
-            { autoAlpha: 1, y: 0, duration: 0.8 },
-            "-=0.42",
-          )
-          .fromTo(
-            heroFeature,
-            { autoAlpha: 0, y: 18 },
-            { autoAlpha: 1, y: 0, duration: 0.9 },
-            "-=0.72",
-          );
-
-        gsap.to(heroContent, {
-          y: -42,
-          autoAlpha: 0.68,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom 42%",
-            scrub: 0.8,
-          },
-        });
-
-        gsap.to(heroImage, {
-          yPercent: 5,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+        if (heroBackground) {
+          gsap.to(heroBackground, {
+            y: -10,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1,
+            },
+          });
+        }
 
         if (canUseHover) {
           const moveImageX = gsap.quickTo(heroImage, "x", { duration: 1.1, ease: premiumEase });
