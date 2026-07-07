@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { Reveal } from "@/components/reveal";
 import { SectionLabel } from "@/components/section-label";
 import { PortfolioShowcase } from "@/components/portfolio-showcase";
 import { ServicesShowcase } from "@/components/services-showcase";
+import { TestimonialSlider } from "@/components/testimonial-slider";
 import { processStages } from "@/data/site-content";
 
 function SectionHeader({
@@ -70,9 +72,18 @@ export function FeaturedProjects() {
         </div>
       </section>
 
+      <section id="testimonials" className="section-shell testimonials-section" aria-labelledby="testimonials-title">
+        <h2 id="testimonials-title" className="sr-only">
+          Testimonials
+        </h2>
+        <Reveal className="testimonials-section__slider">
+          <TestimonialSlider />
+        </Reveal>
+      </section>
+
       <footer className="minimal-footer">
         <div className="minimal-footer__inner">
-          <p className="font-semibold uppercase tracking-[0.18em]">Crescent Design</p>
+          <BrandLogo className="minimal-footer__brand" />
           <nav aria-label="Footer" className="minimal-footer__nav">
             <Link href="#portfolio">Portfolio</Link>
             <Link href="#services">Services</Link>
