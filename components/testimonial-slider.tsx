@@ -5,17 +5,11 @@ import { testimonials } from "@/data/site-content";
 
 export function TestimonialSlider() {
   const [index, setIndex] = useState(0);
-  const [transitionMode, setTransitionMode] = useState<"reveal" | "fade">("reveal");
   const testimonial = testimonials[index];
 
-  const progressLabel = useMemo(
-    () => `${String(index + 1).padStart(2, "0")} / ${String(testimonials.length).padStart(2, "0")}`,
-    [index],
-  );
+  const progressLabel = useMemo(() => `${index + 1} / ${testimonials.length}`, [index]);
 
   function goTo(nextIndex: number) {
-    setTransitionMode("fade");
-
     if (nextIndex < 0) {
       setIndex(testimonials.length - 1);
       return;
@@ -30,35 +24,34 @@ export function TestimonialSlider() {
   }
 
   return (
-    <div className="testimonial-editorial" aria-live="polite">
-      <div
-        className={`testimonial-editorial__left testimonial-editorial__left--${transitionMode}`}
-        key={`meta-${testimonial.name}`}
-      >
-        <div className="testimonial-editorial__client">
-          <p className="section-label testimonial-editorial__label">Testimonials</p>
-          <h3 className="testimonial-editorial__client-name">{testimonial.name}</h3>
-          <p className="testimonial-editorial__client-meta">
-            {testimonial.project} <span aria-hidden="true">&bull;</span> {testimonial.location}
-          </p>
-        </div>
-
-        <div className="testimonial-editorial__nav" aria-label="Testimonial navigation">
-          <button type="button" onClick={() => goTo(index - 1)} aria-label="Previous testimonial">
-            <span aria-hidden="true">&larr;</span>
-          </button>
-          <span>{progressLabel}</span>
-          <button type="button" onClick={() => goTo(index + 1)} aria-label="Next testimonial">
-            <span aria-hidden="true">&rarr;</span>
-          </button>
-        </div>
+    <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.74fr)_minmax(12rem,0.26fr)] lg:items-end">
+      <div className="relative border-t border-[var(--border-subtle)] pt-8">
+        <span aria-hidden="true" className="absolute left-0 top-6 font-display text-[4rem] leading-none text-[var(--accent-soft)]">
+          &ldquo;
+        </span>
+        <blockquote className="max-w-[52rem] pl-10 font-display text-[clamp(2rem,3.3vw,4.8rem)] leading-[1] text-[var(--text-primary)]">
+          {testimonial.quote}
+        </blockquote>
       </div>
 
-      <div
-        className={`testimonial-editorial__right testimonial-editorial__right--${transitionMode}`}
-        key={testimonial.name}
-      >
-        <blockquote className="testimonial-editorial__quote">{testimonial.quote}</blockquote>
+      <div className="flex flex-col gap-8 lg:items-end">
+        <div className="space-y-2 text-sm text-[var(--text-secondary)]">
+          <p className="text-base font-semibold text-[var(--text-primary)]">{testimonial.name}</p>
+          <p>{testimonial.project}</p>
+          <p>{testimonial.location}</p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button type="button" className="icon-button" onClick={() => goTo(index - 1)} aria-label="Previous testimonial">
+            <span aria-hidden="true">&lt;</span>
+          </button>
+          <div className="min-w-14 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+            {progressLabel}
+          </div>
+          <button type="button" className="icon-button" onClick={() => goTo(index + 1)} aria-label="Next testimonial">
+            <span aria-hidden="true">&gt;</span>
+          </button>
+        </div>
       </div>
     </div>
   );

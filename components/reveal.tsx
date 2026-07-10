@@ -3,7 +3,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
-type RevealTag = "div" | "section" | "article" | "figure";
+type RevealTag = "div" | "section" | "article" | "figure" | "li";
 
 type RevealProps = {
   as?: RevealTag;

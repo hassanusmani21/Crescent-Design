@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { BrandLogo } from "@/components/brand-logo";
 import { ConsultationButton } from "@/components/consultation-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -145,7 +144,7 @@ export function SiteHeader() {
             className={`site-header__brand min-w-0 text-[0.95rem] font-semibold uppercase tracking-[0.22em] focus-visible:outline-none ${isOverlay ? "text-[var(--hero-foreground)]" : "text-[var(--text-primary)]"}`}
             aria-label="Crescent Design home"
           >
-            <BrandLogo />
+            Crescent Design
           </Link>
 
           <nav className="ml-auto hidden items-center gap-8 lg:flex" aria-label="Primary">
