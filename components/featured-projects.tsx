@@ -30,7 +30,7 @@ function SectionHeader({
 }
 
 export function FeaturedProjects() {
-  const processPreview = processStages;
+  const processPreview = processStages.slice(0, 4);
 
   return (
     <>
