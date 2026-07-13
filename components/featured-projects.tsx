@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ProcessTimeline } from "@/components/process-timeline";
+import { BrandLogo } from "@/components/brand-logo";
 import { Reveal } from "@/components/reveal";
 import { SectionLabel } from "@/components/section-label";
 import { PortfolioShowcase } from "@/components/portfolio-showcase";
 import { ServicesShowcase } from "@/components/services-showcase";
+import { TestimonialSlider } from "@/components/testimonial-slider";
 import { processStages } from "@/data/site-content";
 
 function SectionHeader({
@@ -28,7 +29,7 @@ function SectionHeader({
 }
 
 export function FeaturedProjects() {
-  const processPreview = processStages;
+  const processPreview = processStages.slice(0, 4);
 
   return (
     <>
@@ -55,33 +56,40 @@ export function FeaturedProjects() {
       </section>
 
       <section id="process" className="section-shell process-section" aria-labelledby="process-title">
-        <div className="process-section__inner">
-          <div className="process-header-block">
-            <div className="process-header-block__title-wrap">
-              <SectionLabel>Process</SectionLabel>
-              <h2 id="process-title" className="process-heading">
-                A quiet architectural sequence.
-              </h2>
-            </div>
-            <p className="process-header-block__description">
-              Four measured phases carry the work from brief to installation.
-            </p>
-          </div>
-          <div className="process-divider" aria-hidden="true" />
-          <div className="process-timeline-block">
-            <ProcessTimeline stages={processPreview} />
-          </div>
+        <SectionHeader
+          eyebrow="Process"
+          title="A quiet sequence for complex decisions."
+          text="Each phase narrows the number of open questions so design, procurement, and site conversations stay clear."
+        />
+        <div className="process-line">
+          {processPreview.map((stage, index) => (
+            <Reveal key={stage.number} as="article" className="process-step" delay={index * 70}>
+              <span>{stage.number}</span>
+              <h3>{stage.title}</h3>
+              <p>{stage.description}</p>
+            </Reveal>
+          ))}
         </div>
+      </section>
+
+      <section id="testimonials" className="section-shell testimonials-section" aria-labelledby="testimonials-title">
+        <h2 id="testimonials-title" className="sr-only">
+          Testimonials
+        </h2>
+        <Reveal className="testimonials-section__slider">
+          <TestimonialSlider />
+        </Reveal>
       </section>
 
       <footer className="minimal-footer">
         <div className="minimal-footer__inner">
-          <p className="font-semibold uppercase tracking-[0.18em]">Crescent Design</p>
+          <BrandLogo className="minimal-footer__brand" />
           <nav aria-label="Footer" className="minimal-footer__nav">
             <Link href="#portfolio">Portfolio</Link>
             <Link href="#services">Services</Link>
             <Link href="#process">Process</Link>
           </nav>
+          <p className="minimal-footer__credit">Designed by Hassan Usmani</p>
           <p>© 2026</p>
         </div>
       </footer>
