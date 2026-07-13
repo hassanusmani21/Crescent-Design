@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandLogo } from "@/components/brand-logo";
+import { ProcessTimeline } from "@/components/process-timeline";
 import { Reveal } from "@/components/reveal";
 import { SectionLabel } from "@/components/section-label";
 import { PortfolioShowcase } from "@/components/portfolio-showcase";
@@ -29,7 +30,7 @@ function SectionHeader({
 }
 
 export function FeaturedProjects() {
-  const processPreview = processStages.slice(0, 4);
+  const processPreview = processStages;
 
   return (
     <>
@@ -58,18 +59,10 @@ export function FeaturedProjects() {
       <section id="process" className="section-shell process-section" aria-labelledby="process-title">
         <SectionHeader
           eyebrow="Process"
-          title="A quiet sequence for complex decisions."
-          text="Each phase narrows the number of open questions so design, procurement, and site conversations stay clear."
+          title="A quiet architectural sequence."
+          text="Four measured phases carry the work from brief to installation."
         />
-        <div className="process-line">
-          {processPreview.map((stage, index) => (
-            <Reveal key={stage.number} as="article" className="process-step" delay={index * 70}>
-              <span>{stage.number}</span>
-              <h3>{stage.title}</h3>
-              <p>{stage.description}</p>
-            </Reveal>
-          ))}
-        </div>
+        <ProcessTimeline stages={processPreview} />
       </section>
 
       <section id="testimonials" className="section-shell testimonials-section" aria-labelledby="testimonials-title">
