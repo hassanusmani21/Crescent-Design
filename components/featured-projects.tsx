@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandLogo } from "@/components/brand-logo";
+import { ConsultationButton } from "@/components/consultation-button";
+import { LinkArrow } from "@/components/link-arrow";
 import { ProcessTimeline } from "@/components/process-timeline";
 import { Reveal } from "@/components/reveal";
 import { SectionLabel } from "@/components/section-label";
@@ -26,6 +28,34 @@ function SectionHeader({
         <p className="section-copy">{text}</p>
       </div>
     </Reveal>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="4" width="16" height="16" rx="5" />
+      <circle cx="12" cy="12" r="3.5" />
+      <path d="M17.25 6.75h.01" />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 5l14 14" />
+      <path d="M19 5 5 19" />
+    </svg>
+  );
+}
+
+function YouTubeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4.75 8.25c.18-1.2 1.08-2.1 2.26-2.24C8.44 5.84 10.2 5.75 12 5.75s3.56.09 4.99.26c1.18.14 2.08 1.04 2.26 2.24.18 1.18.25 2.42.25 3.75s-.07 2.57-.25 3.75c-.18 1.2-1.08 2.1-2.26 2.24-1.43.17-3.19.26-4.99.26s-3.56-.09-4.99-.26c-1.18-.14-2.08-1.04-2.26-2.24A25.4 25.4 0 0 1 4.5 12c0-1.33.07-2.57.25-3.75Z" />
+      <path d="m10.5 9.25 4.25 2.75-4.25 2.75Z" />
+    </svg>
   );
 }
 
@@ -72,9 +102,23 @@ export function FeaturedProjects() {
         <Reveal className="testimonials-section__slider">
           <TestimonialSlider />
         </Reveal>
+        <div className="testimonials-about">
+          <div className="testimonials-about__divider" aria-hidden="true" />
+          <SectionLabel>About</SectionLabel>
+          <div className="testimonials-about__body">
+            <h3>Quiet interiors for considered living.</h3>
+            <p>
+              Crescent Design is an interior architecture studio shaping homes, kitchens, baths, bedrooms, and commercial
+              spaces through proportion, material restraint, and a clear project process.
+            </p>
+          </div>
+          <ConsultationButton className="button-primary testimonials-about__cta">
+            <LinkArrow>Start a Project</LinkArrow>
+          </ConsultationButton>
+        </div>
       </section>
 
-      <footer className="minimal-footer">
+      <Reveal as="footer" className="minimal-footer" rootMargin="0px" threshold={0.01}>
         <div className="minimal-footer__inner">
           <BrandLogo className="minimal-footer__brand" />
           <nav aria-label="Footer" className="minimal-footer__nav">
@@ -82,10 +126,36 @@ export function FeaturedProjects() {
             <Link href="#services">Services</Link>
             <Link href="#process">Process</Link>
           </nav>
+          <div className="minimal-footer__social" aria-label="Social links">
+            <a
+              href="https://www.instagram.com/crescentdesign.in?igsh=MTZmaWI4eGszajdneA%3D%3D&utm_source=qr"
+              aria-label="Instagram"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <InstagramIcon />
+            </a>
+            <span
+              className="minimal-footer__social-placeholder"
+              role="link"
+              aria-label="X Twitter link coming soon"
+              aria-disabled="true"
+            >
+              <XIcon />
+            </span>
+            <span
+              className="minimal-footer__social-placeholder"
+              role="link"
+              aria-label="YouTube link coming soon"
+              aria-disabled="true"
+            >
+              <YouTubeIcon />
+            </span>
+          </div>
           <p className="minimal-footer__credit">Designed by Hassan Usmani</p>
-          <p>© 2026</p>
+          <p className="minimal-footer__copyright">© 2026</p>
         </div>
-      </footer>
+      </Reveal>
     </>
   );
 }

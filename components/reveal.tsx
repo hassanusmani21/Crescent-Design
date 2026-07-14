@@ -3,13 +3,14 @@
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
-type RevealTag = "div" | "section" | "article" | "figure";
+type RevealTag = "div" | "section" | "article" | "figure" | "footer";
 
 type RevealProps = {
   as?: RevealTag;
   children: ReactNode;
   className?: string;
   delay?: number;
+  rootMargin?: string;
   threshold?: number;
 };
 
@@ -18,6 +19,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
+  rootMargin = "0px 0px -10% 0px",
   threshold = 0.18,
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
@@ -48,14 +50,14 @@ export function Reveal({
       },
       {
         threshold,
-        rootMargin: "0px 0px -10% 0px",
+        rootMargin,
       },
     );
 
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, [threshold, visible]);
+  }, [rootMargin, threshold, visible]);
 
   return (
     <Tag

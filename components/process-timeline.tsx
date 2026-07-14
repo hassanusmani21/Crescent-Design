@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProcessStage } from "@/data/site-content";
 import styles from "./process-timeline.module.css";
 
@@ -64,25 +64,137 @@ function ProcessTimelineSegment({ active }: { active: boolean }) {
 }
 
 export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
+  const journeyRef = useRef<HTMLOListElement | null>(null);
+  const stepRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const activeIndexRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const setActiveStep = useCallback((index: number) => {
+    activeIndexRef.current = index;
+    setActiveIndex(index);
+  }, []);
+
+  useEffect(() => {
+    const journey = journeyRef.current;
+
+    if (!journey) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    let frameId = 0;
+
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+    const updateTimeline = () => {
+      frameId = 0;
+
+      if (!mediaQuery.matches) {
+        journey.style.removeProperty("--timeline-top");
+        journey.style.removeProperty("--timeline-height");
+        journey.style.removeProperty("--timeline-progress");
+        return;
+      }
+
+      const items = stepRefs.current.filter(Boolean) as HTMLLIElement[];
+
+      if (items.length === 0) {
+        return;
+      }
+
+      const journeyRect = journey.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const triggerY = viewportHeight * 0.38;
+      const revealStartY = viewportHeight * 0.78;
+      const centers = items.map((item) => {
+        const node = item.querySelector(`.${styles.nodeWrap}`) ?? item;
+        const rect = node.getBoundingClientRect();
+
+        return rect.top + rect.height / 2 - journeyRect.top;
+      });
+      const firstCenter = centers[0] ?? 0;
+      const lastCenter = centers[centers.length - 1] ?? firstCenter;
+      const totalHeight = Math.max(0, lastCenter - firstCenter);
+      let progress = 0;
+      let nextActiveIndex = 0;
+
+      items.forEach((item, index) => {
+        if (index === 0) {
+          return;
+        }
+
+        const itemTop = item.getBoundingClientRect().top;
+        const segmentProgress = clamp((revealStartY - itemTop) / (revealStartY - triggerY), 0, 1);
+        const segmentStart = centers[index - 1] - firstCenter;
+        const segmentEnd = centers[index] - firstCenter;
+
+        progress = Math.max(progress, segmentStart + (segmentEnd - segmentStart) * segmentProgress);
+
+        if (itemTop <= triggerY) {
+          nextActiveIndex = index;
+        }
+      });
+
+      journey.style.setProperty("--timeline-top", `${firstCenter}px`);
+      journey.style.setProperty("--timeline-height", `${totalHeight}px`);
+      journey.style.setProperty("--timeline-progress", `${clamp(progress, 0, totalHeight)}px`);
+
+      if (nextActiveIndex !== activeIndexRef.current) {
+        setActiveStep(nextActiveIndex);
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(updateTimeline);
+    };
+
+    scheduleUpdate();
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    mediaQuery.addEventListener("change", scheduleUpdate);
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      mediaQuery.removeEventListener("change", scheduleUpdate);
+    };
+  }, [setActiveStep, stages.length]);
+
   return (
-    <ol className={styles.journey} aria-label="Process timeline" onMouseLeave={() => setActiveIndex(0)}>
+    <ol className={styles.journey} ref={journeyRef} aria-label="Process timeline" onMouseLeave={() => setActiveStep(0)}>
       {stages.map((stage, index) => {
         const isActive = index === activeIndex;
+        const isComplete = index <= activeIndex;
         const hasSegment = index < stages.length - 1;
         const isSegmentActive = index < activeIndex;
 
         return (
-          <li key={stage.number} className={`${styles.step}${isActive ? ` ${styles.stepActive}` : ""}`}>
+          <li
+            key={stage.number}
+            ref={(element) => {
+              stepRefs.current[index] = element;
+            }}
+            className={`${styles.step}${isComplete ? ` ${styles.stepComplete}` : ""}${
+              isActive ? ` ${styles.stepActive}` : ""
+            }`}
+          >
             {hasSegment ? <ProcessTimelineSegment active={isSegmentActive} /> : null}
             <button
               type="button"
               className={styles.button}
               aria-pressed={isActive}
-              onClick={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              onMouseEnter={() => setActiveIndex(index)}
+              onClick={() => setActiveStep(index)}
+              onFocus={() => setActiveStep(index)}
+              onMouseEnter={() => setActiveStep(index)}
             >
               <span className={styles.nodeWrap} aria-hidden="true">
                 <span className={styles.node} />
