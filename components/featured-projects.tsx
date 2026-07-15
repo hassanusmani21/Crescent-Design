@@ -120,40 +120,70 @@ export function FeaturedProjects() {
 
       <Reveal as="footer" className="minimal-footer" rootMargin="0px" threshold={0.01}>
         <div className="minimal-footer__inner">
-          <BrandLogo className="minimal-footer__brand" />
-          <nav aria-label="Footer" className="minimal-footer__nav">
-            <Link href="#portfolio">Portfolio</Link>
-            <Link href="#services">Services</Link>
-            <Link href="#process">Process</Link>
-          </nav>
-          <div className="minimal-footer__social" aria-label="Social links">
-            <a
-              href="https://www.instagram.com/crescentdesign.in?igsh=MTZmaWI4eGszajdneA%3D%3D&utm_source=qr"
-              aria-label="Instagram"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <InstagramIcon />
-            </a>
-            <span
-              className="minimal-footer__social-placeholder"
-              role="link"
-              aria-label="X Twitter link coming soon"
-              aria-disabled="true"
-            >
-              <XIcon />
-            </span>
-            <span
-              className="minimal-footer__social-placeholder"
-              role="link"
-              aria-label="YouTube link coming soon"
-              aria-disabled="true"
-            >
-              <YouTubeIcon />
-            </span>
+          <div className="minimal-footer__main">
+            <div className="minimal-footer__group minimal-footer__group--brand">
+              <BrandLogo className="minimal-footer__brand" />
+              <p className="minimal-footer__brand-copy">
+                Crescent Design creates quiet interiors shaped by light, material restraint, and considered living.
+              </p>
+            </div>
+
+            <nav aria-label="Footer navigation" className="minimal-footer__group minimal-footer__nav">
+              <p className="minimal-footer__heading">Explore</p>
+              <Link href="#portfolio">Portfolio</Link>
+              <Link href="#services">Services</Link>
+              <Link href="#process">Process</Link>
+            </nav>
+
+            <div className="minimal-footer__group minimal-footer__social" aria-label="Social links">
+              <p className="minimal-footer__heading">Social</p>
+              <div className="minimal-footer__social-list">
+                <a
+                  href="https://www.instagram.com/crescentdesign.in?igsh=MTZmaWI4eGszajdneA%3D%3D&utm_source=qr"
+                  aria-label="Instagram"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <InstagramIcon />
+                  <span>Instagram</span>
+                </a>
+                <span
+                  className="minimal-footer__social-placeholder"
+                  role="link"
+                  aria-label="X link coming soon"
+                  aria-disabled="true"
+                >
+                  <XIcon />
+                  <span>X</span>
+                </span>
+                <span
+                  className="minimal-footer__social-placeholder"
+                  role="link"
+                  aria-label="YouTube link coming soon"
+                  aria-disabled="true"
+                >
+                  <YouTubeIcon />
+                  <span>YouTube</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="minimal-footer__group minimal-footer__contact">
+              <p className="minimal-footer__heading">Inquiries</p>
+              <ConsultationButton className="button-primary minimal-footer__cta">
+                <LinkArrow>Start a Project</LinkArrow>
+              </ConsultationButton>
+              <a href="mailto:hello@crescentdesign.in" className="minimal-footer__email">
+                hello@crescentdesign.in
+              </a>
+            </div>
+
+            <div className="minimal-footer__section-divider" aria-hidden="true" />
           </div>
-          <p className="minimal-footer__credit">Designed by Hassan Usmani</p>
-          <p className="minimal-footer__copyright">© 2026</p>
+
+          <div className="minimal-footer__bottom">
+            <p className="minimal-footer__credit">Designed by Hassan Usmani • © 2026 All Rights Reserved</p>
+          </div>
         </div>
       </Reveal>
     </>

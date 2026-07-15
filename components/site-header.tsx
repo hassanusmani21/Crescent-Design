@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BrandLogo } from "@/components/brand-logo";
 import { ConsultationButton } from "@/components/consultation-button";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { label: "Portfolio", href: "#portfolio", id: "portfolio" },
@@ -166,7 +165,6 @@ export function SiteHeader() {
           </nav>
 
           <div className="ml-auto hidden items-center gap-3 lg:flex">
-            <ThemeToggle className="header-theme-toggle" />
             <ConsultationButton
               className={`header-cta magnetic-target min-h-11 px-5 text-base ${isOverlay ? "button-secondary text-[var(--hero-foreground)] shadow-none" : "button-primary"}`}
             >
@@ -175,7 +173,6 @@ export function SiteHeader() {
           </div>
 
           <div className="ml-auto flex items-center gap-2 lg:hidden">
-            <ThemeToggle />
             <button
               ref={menuButtonRef}
               type="button"
@@ -232,14 +229,6 @@ export function SiteHeader() {
             </nav>
 
             <div className="space-y-8 border-t border-[var(--border-subtle)] pt-8">
-              <div className="flex items-center justify-between gap-4 border border-[var(--border-subtle)] px-4 py-3">
-                <div>
-                  <p className="section-label">Theme</p>
-                  <p className="mt-1 text-sm text-[var(--text-secondary)]">Choose light or dark.</p>
-                </div>
-                <ThemeToggle />
-              </div>
-
               <ConsultationButton className="button-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
                 Start a Project
               </ConsultationButton>

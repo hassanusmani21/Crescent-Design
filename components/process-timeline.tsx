@@ -74,6 +74,17 @@ export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
     setActiveIndex(index);
   }, []);
 
+  const setInteractiveStep = useCallback(
+    (index: number) => {
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        return;
+      }
+
+      setActiveStep(index);
+    },
+    [setActiveStep],
+  );
+
   useEffect(() => {
     const journey = journeyRef.current;
 
@@ -105,7 +116,6 @@ export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
       const journeyRect = journey.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const triggerY = viewportHeight * 0.38;
-      const revealStartY = viewportHeight * 0.78;
       const centers = items.map((item) => {
         const node = item.querySelector(`.${styles.nodeWrap}`) ?? item;
         const rect = node.getBoundingClientRect();
@@ -115,32 +125,20 @@ export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
       const firstCenter = centers[0] ?? 0;
       const lastCenter = centers[centers.length - 1] ?? firstCenter;
       const totalHeight = Math.max(0, lastCenter - firstCenter);
-      let progress = 0;
-      let nextActiveIndex = 0;
+      const rawProgress = triggerY - journeyRect.top - firstCenter;
+      const progress = clamp(rawProgress, 0, totalHeight);
+      const reachedIndex = centers.reduce((currentIndex, center, index) => {
+        const stepPosition = center - firstCenter;
 
-      items.forEach((item, index) => {
-        if (index === 0) {
-          return;
-        }
-
-        const itemTop = item.getBoundingClientRect().top;
-        const segmentProgress = clamp((revealStartY - itemTop) / (revealStartY - triggerY), 0, 1);
-        const segmentStart = centers[index - 1] - firstCenter;
-        const segmentEnd = centers[index] - firstCenter;
-
-        progress = Math.max(progress, segmentStart + (segmentEnd - segmentStart) * segmentProgress);
-
-        if (itemTop <= triggerY) {
-          nextActiveIndex = index;
-        }
-      });
+        return progress >= stepPosition ? index : currentIndex;
+      }, 0);
 
       journey.style.setProperty("--timeline-top", `${firstCenter}px`);
       journey.style.setProperty("--timeline-height", `${totalHeight}px`);
-      journey.style.setProperty("--timeline-progress", `${clamp(progress, 0, totalHeight)}px`);
+      journey.style.setProperty("--timeline-progress", `${progress}px`);
 
-      if (nextActiveIndex !== activeIndexRef.current) {
-        setActiveStep(nextActiveIndex);
+      if (reachedIndex !== activeIndexRef.current) {
+        setActiveStep(reachedIndex);
       }
     };
 
@@ -170,10 +168,10 @@ export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
   }, [setActiveStep, stages.length]);
 
   return (
-    <ol className={styles.journey} ref={journeyRef} aria-label="Process timeline" onMouseLeave={() => setActiveStep(0)}>
+    <ol className={styles.journey} ref={journeyRef} aria-label="Process timeline" onMouseLeave={() => setInteractiveStep(0)}>
       {stages.map((stage, index) => {
         const isActive = index === activeIndex;
-        const isComplete = index <= activeIndex;
+        const isComplete = index < activeIndex;
         const hasSegment = index < stages.length - 1;
         const isSegmentActive = index < activeIndex;
 
@@ -192,9 +190,9 @@ export function ProcessTimeline({ stages }: { stages: ProcessStage[] }) {
               type="button"
               className={styles.button}
               aria-pressed={isActive}
-              onClick={() => setActiveStep(index)}
-              onFocus={() => setActiveStep(index)}
-              onMouseEnter={() => setActiveStep(index)}
+              onClick={() => setInteractiveStep(index)}
+              onFocus={() => setInteractiveStep(index)}
+              onMouseEnter={() => setInteractiveStep(index)}
             >
               <span className={styles.nodeWrap} aria-hidden="true">
                 <span className={styles.node} />

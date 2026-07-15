@@ -214,37 +214,37 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "We had a lot of ideas but couldn't bring everything together. Crescent Design helped us make confident decisions throughout the project without losing sight of daily routines. The final result feels practical, warm, and truly reflects how we wanted our home to feel.",
-    name: "Priya & Rohan Mehta",
+    name: "Ayesha & Imran Shaikh",
     project: "Private Residence",
-    location: "Mumbai",
+    location: "Mumbra",
   },
   {
     quote:
       "We were renovating while living in the apartment, so clarity mattered a lot. The team kept decisions simple, explained material choices well, and planned storage around how we actually use the space. It now feels calmer without feeling too formal.",
-    name: "Ananya & Kunal Sharma",
+    name: "Sana & Faizan Khan",
     project: "Apartment Renovation",
-    location: "Pune",
+    location: "Thane",
   },
   {
     quote:
       "Our brief was simple, but we were particular about comfort. Crescent Design found a good balance between clean lines, warmer materials, and practical planning. The house feels easy to live in for all of us, and the detailing still feels thoughtful months later.",
-    name: "Neha & Arjun Kapoor",
+    name: "Zainab & Arif Ansari",
     project: "Residence",
-    location: "Bengaluru",
+    location: "Kausa-Mumbra",
   },
   {
     quote:
       "We wanted the villa to feel open, but not empty. The layouts, lighting, and built-in storage were handled with a lot of care during site meetings. What we appreciated most was that every suggestion had a clear reason behind it.",
-    name: "Mira & Vikram Patel",
+    name: "Maryam & Yusuf Qureshi",
     project: "Villa Interior",
-    location: "Ahmedabad",
+    location: "Thane West",
   },
   {
     quote:
       "There were many small decisions we would have struggled with on our own. The process felt steady, never rushed. From finishes to furniture placement, the team helped us choose what suited our family, not just what looked good in a render.",
-    name: "Sneha Iyer",
+    name: "Alina Siddiqui",
     project: "Home Interior",
-    location: "Hyderabad",
+    location: "Majiwada-Thane",
   },
 ];
 
